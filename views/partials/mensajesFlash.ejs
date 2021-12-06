@@ -1,0 +1,25 @@
+<% if(alertas != 0) {%>
+    <div class="container p-4">
+            <div class="row">
+                <div class="col-md-4 mx-auto">
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <%- alertas %>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </div>
+            </div>
+    </div>
+<% } %>
+
+<% if(informacion != 0) {%>
+    <div class="container p-4">
+            <div class="row">
+                <div class="col-md-4 mx-auto">
+                    <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                        <%- informacion %>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </div>
+            </div>
+    </div>
+<% } %>
