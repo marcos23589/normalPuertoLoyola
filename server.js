@@ -32,7 +32,7 @@ app.use(session({
 
 /* se usa como renderizador ejs que es el motor de renderizado
 renderiza lo que se encuentra en el archivo layout.ejs, 
-dentro de <% body %>  */
+dentro de <%- body %>  */
 
 app.set('view engine', 'ejs');
 //cuando se pida renderizado, 
