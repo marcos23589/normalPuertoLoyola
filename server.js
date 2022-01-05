@@ -13,7 +13,6 @@ const app = express();
 
 //inicializa la conexion con la base de datos
 
-
 //app.METODO(PARAMETRO, VALOR);
 
 //motores

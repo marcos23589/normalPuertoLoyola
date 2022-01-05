@@ -10,13 +10,6 @@ exports.paginaHome = (req, res) =>{
     return res.render('home',{nombrePagina:'Home ceroUno'});
 };
 
-exports.about = (req, res)=>{
-    return res.render('nosotros', {nombrePagina: 'Nosotros'})
-}
-
-exports.ingreso = (req, res)=>{
-    return res.render('ingreso', {nombrePagina: 'Formulario de ingreso'})
-}
 
 exports.registrarDB = (req, res) =>{
     return res.send('Registro en DB')
@@ -80,8 +73,4 @@ exports.verPersonaje = async (req,res) =>{
     const idVista = req.params._id;
     const vista = await Personaje.findById(idVista)
     return res.render('view', {vista, nombrePagina:'Home ceroUno'})
-}
-
-exports.paginaNormal = (req,res) =>{
-    return res.render('normal', {nombrePagina:'Normal ceroUno'})
 }

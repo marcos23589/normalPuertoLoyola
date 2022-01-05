@@ -13,10 +13,6 @@ module.exports = (req, res) => {
 
     router.get('/conparametrosget/:mivariable/:variable2', 
                 controladorPrincipal.paramGet);
-    
-    router.get('/about', controladorPrincipal.about)
-
-    router.get('/ingreso', controladorPrincipal.ingreso)
 
     router.get('/crearPersonaje', controladorPrincipal.crearPersonajeGet)
 
@@ -31,8 +27,6 @@ module.exports = (req, res) => {
     router.post('/edit/:_id', controladorPrincipal.postPersonaje)
 
     router.get('/view/:_id', controladorPrincipal.verPersonaje)
-
-    router.get('/paginanormal', controladorPrincipal.paginaNormal)
 
     return router;
 };
