@@ -1,35 +1,46 @@
-
-<% if (link) {%>}
 <div class="container p-4">
     <div class="row">
-        <div class="col-md-5 mx-auto">
+        <div class="col-md-7 mx-auto">
             <div class="card">
                 <div class="card-body">
-                    <form class="row g-3" action="/edit/{{link.idAlumnos}}" method="POST">
-                        <h3>Edición de alumno</h3>
-                        <div class="col-md-12">
-                                <label class="form-label">Nombre</label>
-                                <input value="<%= link.nombre >" type="text" class="form-control" name="nombre" id="nombre" placeholder="Juan" autofocus required="required">
+                    <form class="row g-4" action="/edit/<%- edicion._id %>" , method="POST">
+                        <h2 class="text-center">Registro de agentes</h2>
+                        <div class="row g-2">
+                            <div class="form-floating col-md">
+                                <input value= "<%- edicion.apellido %>" type="text" aria-label="apellido" class="form-control" name="apellido" placeholder="Apellido"
+                                    autofocus>
+                                <label for="apellido">Apellido</label>
                             </div>
-                            <div class="col-md-12">
-                                <label class="form-label">Apellido</label>
-                                <input value="<%= link.apellido >" type="text" class="form-control" name="apellido" id="apellido" placeholder="Perez" required="required">
+                            <div class="form-floating col-md">
+                                <input value="<%- edicion.nombre %>" type="text" aria-label="nombre" class="form-control" name="nombre" placeholder="Nombre" autofocus>
+                                <label for="nombre">Nombre</label>
                             </div>
-                            <div class="col-6">
-                                <label class="form-label">Documento</label>
-                                <input value="<%= link.documento >" type="number" class="form-control" name="documento" id="documento"  placeholder="99.999.999" required="required">
+                        </div>
+                        <div class="row g-2">
+                            <div class="form-floating col-md">
+                                <input value="<%- edicion.dni %>" type="number" class="form-control" name="dni">
+                                <label for="documento">Documento</label>
                             </div>
-                            <div class="col-6">
-                                <label class="form-label">Fecha de nacimiento</label>
-                                <input value="<%= link.nacimiento >" type="date" class="form-control" name="nacimiento" id="nacimiento" required="required">
+                            <div class="form-floating col-md">
+                                <select class="form-select" aria-label="Default select example" name="revista">
+                                    <option selected value="<%- edicion.revista %>"><%- edicion.revista %></option>
+                                    <option value="titular">Titular</option>
+                                    <option value="interino">Interino</option>
+                                    <option value="suplente">Suplente</option>
+                                </select>
+                                <label for="revista">Situación de revista</label>
                             </div>
-                            <div class="form-group d-grid gap-2">
-                                <button class="btn btn-primary ">Guardar cambios</button>
-                            </div>
+                        </div>
+                        <div class="input-group ">
+                            <span class="input-group-text">email</span>
+                            <input value="<%- edicion.correo %>" type="email" class="form-control" name="correo" placeholder="name@example.com">
+                        </div>
+                        <div class="form-group d-grid gap-2">
+                            <button class="btn btn-primary ">Guardar cambios</button>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<% } %>

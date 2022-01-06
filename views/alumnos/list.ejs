@@ -8,9 +8,8 @@
                 <tr>
                     <th scope="col">Apellido</th>
                     <th scope="col">Nombre</th>
-                    <th scope="col">Documento</th>
-                    <th scope="col">Revista</th>
-                    <th scope="col">e-mail</th>
+                    <th scope="col">Documento</th>                    
+                    <th scope="col">Fecha nac.</th>
                 </tr>
             </thead>
             <tbody>
@@ -23,13 +22,10 @@
                             <%- resultado.nombre %>
                         </td>
                         <td>
-                            <%- resultado.dni %>
+                            <%- resultado.documento %>
                         </td>
                         <td>
-                            <%- resultado.revista %>
-                        </td>
-                        <td>
-                            <%- resultado.correo %>
+                            <%- fechaNac %>
                         </td>
 
                         <td>
@@ -49,5 +45,5 @@
                 <% } %>
             </tbody>
     </table>
-    <a role="button" class="btn btn-primary btn-lg" href="/crearPersonaje">Agregar agente</a>
+    <a role="button" class="btn btn-primary btn-lg" href="/add">Agregar</a>
 </div>

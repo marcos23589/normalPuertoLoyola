@@ -14,11 +14,11 @@ module.exports = (req, res) => {
     router.get('/conparametrosget/:mivariable/:variable2', 
                 controladorPrincipal.paramGet);
 
-    router.get('/crearPersonaje', controladorPrincipal.crearPersonajeGet)
+    router.get('/add', controladorPrincipal.crearPersonajeGet)
 
-    router.post('/crearPersonaje', controladorPrincipal.crearPersonaje)
+    router.post('/add', controladorPrincipal.crearPersonaje)
 
-    router.get('/listarpersonajes', controladorPrincipal.listarPersonajes)
+    router.get('/list', controladorPrincipal.listarPersonajes)
 
     router.get('/delete/:_id', controladorPrincipal.eliminarPersonajes)
 

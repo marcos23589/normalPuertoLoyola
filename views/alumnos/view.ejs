@@ -3,15 +3,20 @@
         <div class="col-sm-6">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">{{link.apellido}}, {{link.nombre}}</h5>
-                    <p class="card-text">D.N.I. N° {{link.documento}}</p>
-                    <p class="card-text">Fecha de nacimiento: {{timeago link.nacimiento}}</p>                    
+                    <h3 class="card-title">
+                        <%- vista.apellido %>, <%- vista.nombre %>
+                    </h3>
+                    <hr>
+                    <p class="card-text">D.N.I. N° <%- vista.documento %>
+                    </p>
+                    <p class="card-text">Fecha de nacimiento: <%- fechaNac %>
+                    </p>
                     <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                        <a href="/search" class="btn btn-primary">Volver</a>
-                        <a href="/edit/{{link.idAlumnos}}" class="btn btn-secondary">Editar</a>
-                        <a href="/delete/{{link.idAlumnos}}" class="btn btn-danger">Eliminar</a>
+                        <a href="/listarpersonajes" class="btn btn-primary">Volver</a>
+                        <a href="/edit/<%- vista._id %>" class="btn btn-secondary">Editar</a>
+                        <a href="delete/<%- vista._id %>" class="btn btn-danger">Eliminar</a>
                     </div>
                 </div>
             </div>
+        </div>
     </div>
-</div>
