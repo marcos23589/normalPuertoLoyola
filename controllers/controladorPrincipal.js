@@ -1,6 +1,5 @@
 const { Error } = require('mongoose');
 const Personaje = require('../models/personajes');
-const date_fns = require('date-fns');
 const helpers = require('../lib/helpers');
 
 exports.paramGet = (req, res) => {    
@@ -23,41 +22,45 @@ exports.crearPersonajeGet = (req,res) => {
 
 exports.crearPersonaje = async (req,res)=>{
     
-    try {
-        await Personaje.insertMany(req.body);
+    const persona = Personaje(req.body);
+
+    try {        
+        await persona.save();        
+        req.flash('info', 'Ingreso exitoso!');
     } catch (error) {        
-        console.log("ERROR! ->",error.code);
+        console.log("ERROR! ->",error);
         if(error.code == 11000){
             req.flash('alerta', 'Documento ya registrado!');
             return res.redirect('list');
-        }        
-    }
-    console.log("add ->", req.body);
-    req.flash('info', 'Ingreso exitoso!');
+        }
+    }    
     return res.redirect('list');    
-    
 }
 
 exports.listarPersonajes = async (req,res)=>{
     const resultado = await Personaje.find();
     
-    console.log('resultado ->',resultado[0].nacimiento)
-
-    const fechaNac = helpers.fechaNacimiento(resultado[0].nacimiento)    
-        
-    return res.render('alumnos/list', {resultado, fechaNac, nombrePagina:'Lista de agentes'})
+    for(let i=0; i<resultado.length; i++){
+        let fecha = helpers.fechaNacimiento(resultado[i].nacimiento);
+        //se crea otra variable dentro del objeto para mostrarla
+        resultado[i].fecha = fecha;        
+    }
+    
+    return res.render('alumnos/list', {resultado, nombrePagina:'Lista de agentes'})
 }
 
 exports.eliminarPersonajes = async (req, res) =>{            
     await Personaje.findByIdAndDelete(req.params._id);
     req.flash('alerta', 'Registro eliminado!');
-    return res.redirect('/alumnos/list')
+    return res.redirect('/list')
 }
 
 exports.editarPersonaje = async (req, res) =>{
     const idEdicion = req.params._id;
     const edicion = await Personaje.findById(idEdicion);    
-    return res.render('alumnos/edit',{edicion, nombrePagina:'Home ceroUno'})
+    let fecha = helpers.fechaNacimientoBacks(edicion.nacimiento);
+        
+    return res.render('alumnos/edit',{edicion, fecha, nombrePagina:'Home ceroUno'})
 }
 
 exports.postPersonaje = async (req, res)=>{    
@@ -71,7 +74,7 @@ exports.postPersonaje = async (req, res)=>{
         nacimiento: editado.nacimiento
     });
     req.flash('info', 'Edición exitosa!');
-    return res.redirect('list')
+    return res.redirect('/list')
 }
 
 exports.verPersonaje = async (req,res) =>{
