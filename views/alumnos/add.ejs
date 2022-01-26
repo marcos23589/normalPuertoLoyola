@@ -1,36 +1,213 @@
-<div class="container p-4">
-    <div class="row">
-        <div class="col-md-5 mx-auto">
-            <div class="card">
-                <div class="card-body">
-                    <form class="row g-3" action="/add" method="POST">
-                        <h3>Ingreso de alumnos</h3>
-                        <div class="col-md-12">
-                            <label class="form-label">Nombre</label>
-                            <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Juan"
-                                autofocus required="required">
-                        </div>
-                        <div class="col-md-12">
-                            <label class="form-label">Apellido</label>
-                            <input type="text" class="form-control" name="apellido" id="apellido" placeholder="Perez"
-                                required="required">
-                        </div>
-                        <div class="col-6">
-                            <label class="form-label">Documento</label>
-                            <input type="number" class="form-control" name="documento" id="documento"
-                                placeholder="99.999.999" required="required">
-                        </div>
-                        <div class="col-6">
-                            <label class="form-label">Fecha de nacimiento</label>
-                            <input type="date" class="form-control" name="nacimiento" id="nacimiento"
-                                required="required">
-                        </div>
-                        <div class="form-group d-grid gap-2">
-                            <button class="btn btn-primary ">Agregar alumno</button>
-                        </div>
-                    </form>
-                </div>
+<!-- <div class="container p-4">
+  <div class="row">
+    <div class="col-md-5 mx-auto">
+      <div class="card">
+        <div class="card-body">
+          <form class="row g-3" action="/add" method="POST">
+            <h3>Ingreso de alumnos</h3>
+            <div class="col-md-12">
+              <label class="form-label">Nombre</label>
+              <input
+                type="text"
+                class="form-control"
+                name="nombre"
+                id="nombre"
+                placeholder="Juan"
+                autofocus
+                required="required"
+              />
             </div>
+            <div class="col-md-12">
+              <label class="form-label">Apellido</label>
+              <input
+                type="text"
+                class="form-control"
+                name="apellido"
+                id="apellido"
+                placeholder="Perez"
+                required="required"
+              />
+            </div>
+            <div class="col-6">
+              <label class="form-label">Documento</label>
+              <input
+                type="number"
+                class="form-control"
+                name="documento"
+                id="documento"
+                placeholder="99.999.999"
+                required="required"
+              />
+            </div>
+            <div class="col-6">
+              <label class="form-label">Fecha de nacimiento</label>
+              <input
+                type="date"
+                class="form-control"
+                name="nacimiento"
+                id="nacimiento"
+                required="required"
+              />
+            </div>
+
+            <div class="form-group d-grid gap-2">
+              <button class="btn btn-primary">Agregar alumno</button>
+            </div>
+          </form>
         </div>
+      </div>
     </div>
+  </div>
+</div> -->
+<div class="container w-75">
+  <form class="row" action="/add" method="POST">
+    <legend>Datos del alumno</legend>
+    <div class="input-group mb-3">
+      <span class="input-group-text">Apellido y Nombres</span>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Pérez"
+        name="apellido"
+      />
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Juan"
+        name="nombre"
+      />
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text">Lugar de nacimiento</span>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Río Gallegos, Santa Cruz"
+        aria-label="nacimiento"
+        name="lugarNacimiento"
+      />
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text">DNI</span>
+      <input
+        type="number"
+        class="form-control"
+        placeholder="99.999.999"
+        aria-label="Username"
+        name="documento"
+      />
+      <span class="input-group-text">Nacimiento</span>
+      <input
+        type="date"
+        class="form-control"
+        placeholder="12/04/2009"
+        aria-label="nacimiento"
+        name="nacimiento"
+      />
+      <span class="input-group-text">Curso</span>
+      <select class="form-select" name="curso">
+        <option selected>seleccione</option>
+        <option value="1A">1A</option>
+        <option value="1B">1B</option>
+        <option value="1C">1C</option>
+        <option value="2A">2A</option>
+        <option value="2B">2B</option>
+        <option value="2C">2C</option>
+        <option value="3A">3A</option>
+        <option value="3B">3B</option>
+        <option value="3C">3C</option>
+        <option value="4A">4A</option>
+        <option value="4B">4B</option>
+        <option value="5A">5A</option>
+        <option value="5B">5B</option>
+        <option value="TY">TY</option>
+      </select>
+      <span class="input-group-text">Año</span>
+      <select class="form-select" name="anioCurso">
+        <option selected>seleccione</option>
+        <option value="2022">2022</option>
+        <option value="2021">2021</option>
+        <option value="2020">2020</option>
+        <option value="2019">2019</option>
+        <option value="2018">2018</option>
+        <option value="2017">2017</option>
+        <option value="2016">2016</option>
+        <option value="2015">2015</option>
+        <option value="2014">2014</option>
+        <option value="2013">2013</option>
+      </select>
+    </div>
+    <legend>Libro Matriz y Legajo</legend>
+    <div class="input-group mb-3">
+      <span class="input-group-text">Libro</span>
+      <select class="form-select" name="numeroLibro">
+        <option value="3">3</option>
+        <option value="2">2</option>
+        <option value="1">1</option>
+      </select>
+      <span class="input-group-text">Folio</span>
+      <input
+        type="number"
+        class="form-control"
+        name="folioLibro"
+        min="1"
+        max="260"
+      />
+      <span class="input-group-text">Legajo</span>
+      <input type="number" class="form-control" name="numeroLegajo" />
+      <span class="input-group-text">Año</span>
+      <input type="number" class="form-control" name="anioLegajo" />
+    </div>
+    <legend>Historial</legend>
+    <div class="input-group mb-3">
+      <span class="input-group-text">Colegio de origen</span>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="CPES N°37"
+        name="colegioOrigen"
+      />
+      <span class="input-group-text">Fecha de Ingreso</span>
+      <input
+        type="date"
+        class="form-control"
+        placeholder="dd/mm/yyyy"
+        name="ingreso"
+      />
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text">Colegio de Destino</span>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Domingo Savio"
+        name="colegioDestino"
+      />
+      <span class="input-group-text">Fecha de salida</span>
+      <input
+        type="date"
+        class="form-control"
+        placeholder="dd/mm/yyyy"
+        name="fechaSalida"
+      />
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text">Situación</span>
+      <input type="text" class="form-control" name="situacion" />
+      <span class="input-group-text">Fecha de egreso</span>
+      <input
+        type="date"
+        class="form-control"
+        placeholder="dd/mm/yyyy"
+        name="fechaEgreso"
+      />
+    </div>
+    <div class="mb-3">
+      <legend>Observaciones</legend>
+      <textarea class="form-control" name="observaciones" rows="3"></textarea>
+    </div>
+    <div class="form-group d-grid gap-2">
+      <button class="btn btn-primary">Agregar alumno</button>
+    </div>
+  </form>
 </div>
