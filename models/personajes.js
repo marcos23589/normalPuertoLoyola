@@ -3,12 +3,41 @@ const mongoose = require("mongoose");
 const personajeSchema = mongoose.Schema({
   nombre: String,
   apellido: String,
-  documento: { type: Number, required: true, unique: true },
+  documento: {
+    type: Number,
+    min: [1000000, "Documento no válido"],
+    required: true,
+    unique: true,
+  },
   nacimiento: Date,
   lugarNacimiento: String,
-  libroMatriz: { numeroLibro: Number, folioLibro: Number },
-  legajo: { numeroLegajo: Number, anioLegajo: Number },
-  trayectoria: new Array({ curso: String, anioCurso: Number }),
+  libroMatriz: {
+    numeroLibro: {
+      type: Number,
+      min: [1, "Dato no válido"],
+    },
+    folioLibro: {
+      type: Number,
+      min: [1, "Dato no válido"],
+    },
+  },
+  legajo: {
+    numeroLegajo: {
+      type: Number,
+      min: [1, "Dato no válido"],
+    },
+    anioLegajo: {
+      type: Number,
+      min: [1900, "Año no válido"],
+    },
+  },
+  trayectoria: new Array({
+    curso: String,
+    anioCurso: {
+      type: Number,
+      min: [1900, "Año no válido"],
+    },
+  }),
   historial: {
     colegioOrigen: String,
     ingreso: Date,

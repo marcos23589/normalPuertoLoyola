@@ -76,7 +76,8 @@ exports.crearPersonaje = async (req, res) => {
     console.log("ERROR! ->", error);
     if (error.code == 11000) {
       req.flash("alerta", "Documento ya registrado!");
-      return res.redirect("list");
+    } else {
+      req.flash("alerta", "datos ingresados no válidos");
     }
   }
   return res.redirect("list");
@@ -135,8 +136,8 @@ exports.verPersonaje = async (req, res) => {
   const fechaIngreso = helpers.fechaNacimiento(vista.historial.ingreso);
   const fechaSalida = helpers.fechaNacimiento(vista.historial.fechaSalida);
   const fechaEgreso = helpers.fechaNacimiento(vista.historial.fechaEgreso);
-  let historial = vista.historial;
-  let trayectoria = vista.trayectoria;
+  const historial = vista.historial;
+  const trayectoria = vista.trayectoria;
 
   console.log("idvista ->", fechaNac);
   console.log("idvista2 ->", fechaIngreso);
