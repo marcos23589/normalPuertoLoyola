@@ -28,7 +28,7 @@ const personajeSchema = mongoose.Schema({
     },
     anioLegajo: {
       type: Number,
-      min: [1900, "Año no válido"],
+      min: [00, "Año no válido"],
     },
   },
   trayectoria: new Array({

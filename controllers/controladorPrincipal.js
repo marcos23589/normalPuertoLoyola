@@ -1,5 +1,5 @@
 const { Error } = require("mongoose");
-const Personaje = require("../models/personajes");
+const Personaje = require("../models/alumnos");
 const helpers = require("../lib/helpers");
 
 exports.paramGet = (req, res) => {
@@ -85,10 +85,10 @@ exports.crearPersonaje = async (req, res) => {
 
 exports.listarPersonajes = async (req, res) => {
   const resultado = await Personaje.find();
-  for (let i = 0; i < resultado.length; i++) {
-    let fecha = helpers.fechaNacimiento(resultado[i].nacimiento);
+  for (const element of resultado) {
+    let fecha = helpers.fechaNacimiento(element.nacimiento);
     //se crea otra variable dentro del objeto para mostrarla
-    resultado[i].fecha = fecha;
+    element.fecha = fecha;
   }
 
   return res.render("alumnos/list", {
