@@ -1,34 +1,124 @@
-<% if (edicion) { %>
-<div class="container p-4">
-    <div class="row">
-        <div class="col-md-5 mx-auto">
-            <div class="card">
-                <div class="card-body">
-                    <form class="row g-3" action="/edit/<%= edicion._id %>" method="POST">
-                        <h3>Edición de alumno</h3>
-                        <div class="col-md-12">
-                                <label class="form-label">Nombre</label>
-                                <input value="<%= edicion.nombre %>" type="text" class="form-control" name="nombre" id="nombre" placeholder="Juan" autofocus required="required">
-                            </div>
-                            <div class="col-md-12">
-                                <label class="form-label">Apellido</label>
-                                <input value="<%= edicion.apellido %>" type="text" class="form-control" name="apellido" id="apellido" placeholder="Perez" required="required">
-                            </div>
-                            <div class="col-6">
-                                <label class="form-label">Documento</label>
-                                <input value="<%= edicion.documento %>" type="number" class="form-control" name="documento" id="documento"  placeholder="99.999.999" required="required">
-                            </div>
-                            <div class="col-6">
-                                <label class="form-label">Fecha de nacimiento</label>
-                                <input value="<%= fecha %>" type="date" class="form-control" name="nacimiento" id="nacimiento" required="required">
-                            </div>
-                            <div class="form-group d-grid gap-2">
-                                <button class="btn btn-primary ">Guardar cambios</button>
-                            </div>
-                    </form>
-                </div>
+
+        <% if (edicion) { %>
+            <div class="container w-50">
+                <form class="row" action="/edit/<%= edicion._id %>" method="POST">
+                    <!-------------------DATOS DEL ALUMNO------------------>
+                    <legend>Datos del alumno</legend>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Apellido y Nombres</span>
+                        <input type="text" input value="<%= edicion.apellido %>" class="form-control" placeholder="Pérez" name="apellido" />
+                        <input type="text" input value="<%= edicion.nombre %>" class="form-control" placeholder="Juan" name="nombre" />
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Lugar de nacimiento</span>
+                        <input type="text" input value="<%= edicion.lugarNacimiento %>" class="form-control" placeholder="Río Gallegos, Santa Cruz"
+                            aria-label="nacimiento" name="lugarNacimiento" />
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">DNI</span>
+                        <input type="number" input value="<%= edicion.documento %>" class="form-control text-center" placeholder="99.999.999" aria-label="documento"
+                            name="documento" />
+                        <span class="input-group-text">Fecha Nacimiento</span>
+                        <input type="date" input value="<%= datos.fecha %>" class="form-control" placeholder="12/04/2009" aria-label="nacimiento"
+                            name="nacimiento" />                  
+                    </div>
+<!--                     <div class="input-group mb-3">
+                        <span class="input-group-text">Domicilio</span>
+                        <input type="text" class="form-control " placeholder="" aria-label="domicilio"
+                            name="domicilio" />
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Telefono</span>
+                        <input type="number"  class="form-control " placeholder="99.999.999" aria-label="telefono"
+                            name="telefono" />
+                        <span class="input-group-text">e-mail</span>
+                        <input type="email" class="form-control" placeholder="example@gmail.com" aria-label="email"
+                            name="email" />                  
+                    </div> -->
+                    
+                    <!-------------------LIBRO MATRIZ Y LEGAJO------------------>
+                    <legend>Libro Matriz y Legajo</legend>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Libro</span>
+                        <input type="number" value="<%= libroMatriz.numeroLibro %>" 
+                        class="form-control" name="numeroLibro" min="1" max="260" />
+                        <span class="input-group-text">Folio</span>
+                        <input type="number" value="<%= libroMatriz.folioLibro %>" 
+                        class="form-control" name="folioLibro" min="1" max="260" />
+                        <span class="input-group-text">Legajo</span>
+                        <input type="number" value="<%= libroMatriz.numeroLegajo %>" 
+                        class="form-control" name="numeroLegajo" />
+                        <span class="input-group-text">Año</span>
+                        <input type="number" value="<%= libroMatriz.anioLegajo %>"
+                        class="form-control" name="anioLegajo" />
+                        <span class="input-group-text">Curso</span>
+                        <select class="form-control text-center" name="curso">
+                            <option selected><%= datos.curso %></option>
+                            <option value="1A">1A</option>
+                            <option value="1B">1B</option>
+                            <option value="1C">1C</option>
+                            <option value="2A">2A</option>
+                            <option value="2B">2B</option>
+                            <option value="2C">2C</option>
+                            <option value="3A">3A</option>
+                            <option value="3B">3B</option>
+                            <option value="3C">3C</option>
+                            <option value="4A">4A</option>
+                            <option value="4B">4B</option>
+                            <option value="5A">5A</option>
+                            <option value="5B">5B</option>
+                            <option value="TY">TY</option>
+                        </select>
+                        <span class="input-group-text">Año</span>
+                        <select class="form-control text-center" name="anioCurso">
+                            <option selected ><%= datos.anioCurso %></option>
+                            <option value="2022">2022</option>
+                            <option value="2021">2021</option>
+                            <option value="2020">2020</option>
+                            <option value="2019">2019</option>
+                            <option value="2018">2018</option>
+                            <option value="2017">2017</option>
+                            <option value="2016">2016</option>
+                            <option value="2015">2015</option>
+                            <option value="2014">2014</option>
+                            <option value="2013">2013</option>
+                        </select>
+                    </div>
+                    <!-------------------HISTORIAL------------------>
+                    <legend>Historial</legend>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Colegio de origen</span>
+                        <input type="text" value="<%= historial.colegioOrigen %>" 
+                        class="form-control" placeholder="CPES N°37" name="colegioOrigen" />
+                        <span class="input-group-text">Fecha de Ingreso</span>
+                        <input type="date" value="<%= historial.ingreso %>"
+                        class="form-control" placeholder="dd/mm/yyyy" name="ingreso" />
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Colegio de Destino</span>
+                        <input type="text" value="<%= historial.colegioDestino %>"
+                        class="form-control" placeholder="Domingo Savio" name="colegioDestino" />
+                        <span class="input-group-text">Fecha de salida</span>
+                        <input type="date" value="<%= historial.fechaSalida %>"
+                        class="form-control" placeholder="dd/mm/yyyy" name="fechaSalida" />
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Situación</span>
+                        <input type="text" value="<%= historial.situacion %>"
+                        class="form-control" name="situacion" />
+                        <span class="input-group-text">Fecha de egreso</span>
+                        <input type="date" value="<%= historial.fechaEgreso %>"
+                        class="form-control" placeholder="dd/mm/yyyy" name="fechaEgreso" />
+                    </div>
+                    <div class="mb-3">
+                        <!-------------------OBSERVACIONES------------------>
+                        <legend>Observaciones</legend>
+                        <textarea class="form-control" value="<%= historial.observaciones %>"
+                            name="observaciones" rows="3"></textarea>
+                    </div>
+                    <div class="form-group d-grid gap-2">
+                        <button class="btn btn-primary">Guardar edición</button>
+                    </div>
+                </form>
             </div>
-        </div>
-    </div>
-</div>
-<% } %>
+            <% } %>

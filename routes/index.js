@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const controladorPrincipal = require('../controllers/controladorPrincipal');
+const controladorPrincipal = require('../controllers/controlador');
 
 
 /* esta funcion exporta la devolucion de la funcion "router()" en 
@@ -13,6 +13,8 @@ module.exports = (req, res) => {
 
     router.get('/conparametrosget/:mivariable/:variable2', 
                 controladorPrincipal.paramGet);
+
+    router.get('/about', controladorPrincipal.acerca)
 
     router.get('/add', controladorPrincipal.crearPersonajeGet)
 
