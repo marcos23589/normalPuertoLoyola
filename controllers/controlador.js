@@ -112,9 +112,9 @@ exports.editarPersonaje = async (req, res) => {
   const edicion = await Personaje.findById(idEdicion);
   
   const datos = {
-    fecha : helpers.fechaNacimientoBacks(edicion.nacimiento),
-    curso :  edicion.trayectoria[0].curso,
-    anioCurso : edicion.trayectoria[0].anioCurso
+    fecha : helpers.fechaNacimientoBacks(edicion.nacimiento),    
+    curso :  edicion.trayectoria[Array.length-1].curso,
+    anioCurso : edicion.trayectoria[Array.length-1].anioCurso
   }
   
   const libroMatriz = {
@@ -149,12 +149,33 @@ exports.editarPersonaje = async (req, res) => {
 exports.postPersonaje = async (req, res) => {
   const personajeId = req.params._id;
   const editado = req.body;
+  const curso = editado.curso
+  const anioCurso = editado.anioCurso
+  
   console.log("EDITADO --->", editado)
   await Personaje.findByIdAndUpdate(personajeId, {
     nombre: editado.nombre,
     apellido: editado.apellido,
     documento: editado.documento,
     nacimiento: editado.nacimiento,
+    libroMatriz: {
+      numeroLibro: editado.numeroLibro,
+      folioLibro: editado.folioLibro
+    },
+    legajo: {
+      numeroLegajo: editado.numeroLegajo,
+      anioLegajo: editado.anioLegajo
+    },
+    historial: {
+      colegioOrigen: editado.colegioOrigen,
+      ingreso: editado.ingreso,
+      colegioDestino: editado.colegioDestino,
+      fechaSalida: editado.fechaSalida,
+      situacion: editado.situacion,
+      observaciones: editado.observaciones,
+      fechaEgreso: editado.fechaEgreso
+    },
+    /* INSERTAR EL OBJETO AL FINAL DEL ARREGLO TRAYECTORIA */
   });
   req.flash("info", "Edición exitosa!");
   return res.redirect("/list"); 
@@ -168,12 +189,12 @@ exports.verPersonaje = async (req, res) => {
   const fechaIngreso = helpers.fechaNacimiento(vista.historial.ingreso);
   const fechaSalida = helpers.fechaNacimiento(vista.historial.fechaSalida);
   const fechaEgreso = helpers.fechaNacimiento(vista.historial.fechaEgreso);
-  const historial = vista.historial;
+  const historial = vista.historial;  
   const trayectoria = vista.trayectoria;
 
   console.log("idvista ->", fechaNac);
   console.log("idvista2 ->", fechaIngreso);
-
+  console.log("cuerpo -->", vista);
   return res.render("alumnos/view", {
     vista,
     fechaNac,
