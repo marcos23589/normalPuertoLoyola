@@ -19,10 +19,12 @@ exports.registrarDB = (req, res) => {
   return res.send("Registro en DB");
 };
 
+/* PAGINA PARA AGREGAR */
 exports.crearPersonajeGet = (req, res) => {
   return res.render("alumnos/add", { nombrePagina: "Agregar alumno" });
 };
 
+/* SE ENVIAN DATOS A LA BASE PARA AGREGAR */
 exports.crearPersonaje = async (req, res) => {
   const {
     nombre,
@@ -31,11 +33,9 @@ exports.crearPersonaje = async (req, res) => {
     documento,
     nacimiento,
     curso,
-    anioCurso,
-    numeroLibro,
-    folioLibro,
-    numeroLegajo,
-    anioLegajo,
+    division,
+    libroMatriz,
+    legajo,
     colegioOrigen,
     ingreso,
     colegioDestino,
@@ -44,11 +44,7 @@ exports.crearPersonaje = async (req, res) => {
     fechaEgreso,
     observaciones,
   } = req.body;
-
-  const libroMatriz = { numeroLibro, folioLibro };
-  const legajo = { numeroLegajo, anioLegajo };
-  let trayectoria = new Array();
-  trayectoria.push({ curso, anioCurso });
+  
   const historial = {
     colegioOrigen,
     ingreso,
@@ -67,12 +63,13 @@ exports.crearPersonaje = async (req, res) => {
     lugarNacimiento,
     libroMatriz,
     legajo,
-    trayectoria,
+    curso,
+    division,
     historial,
   };
 
   console.log("crear ->", persona);
-
+  
   try {
     await Personaje(persona).save();
     req.flash("info", "Ingreso exitoso!");
@@ -87,6 +84,7 @@ exports.crearPersonaje = async (req, res) => {
   return res.redirect("list");
 };
 
+/* LISTAR REGISTROS */
 exports.listarPersonajes = async (req, res) => {
   const resultado = await Personaje.find();
   for (const element of resultado) {
@@ -101,28 +99,28 @@ exports.listarPersonajes = async (req, res) => {
   });
 };
 
+/* ELIMINAR REGISTROS */
 exports.eliminarPersonajes = async (req, res) => {
   await Personaje.findByIdAndDelete(req.params._id);
   req.flash("alerta", "Registro eliminado!");
   return res.redirect("/list");
 };
 
+/* PARA PINTAR EN LA PANTALLA DE EDICION */
 exports.editarPersonaje = async (req, res) => {
   const idEdicion = req.params._id;
   const edicion = await Personaje.findById(idEdicion);
   
   const datos = {
     fecha : helpers.fechaNacimientoBacks(edicion.nacimiento),    
-    curso :  edicion.trayectoria[Array.length-1].curso,
-    anioCurso : edicion.trayectoria[Array.length-1].anioCurso
+    curso :  edicion.curso,
+    division : edicion.division
   }
   
-  const libroMatriz = {
-    numeroLibro:  edicion.libroMatriz.numeroLibro,
-    folioLibro: edicion.libroMatriz.folioLibro,
-    numeroLegajo: edicion.legajo.numeroLegajo,
-    anioLegajo: edicion.legajo.anioLegajo
-  }
+  const libroMatriz = edicion.libroMatriz
+
+    
+  const legajo = edicion.legajo
 
   const historial = {
     colegioOrigen: edicion.historial.colegioOrigen,
@@ -140,17 +138,17 @@ exports.editarPersonaje = async (req, res) => {
     edicion,
     datos,
     libroMatriz,
+    legajo,
     historial,
     nombrePagina: "Home",
   });
   
 };
 
+/* SE ENVIAN DATOS DESPUES DE EDITAR DATOS */
 exports.postPersonaje = async (req, res) => {
   const personajeId = req.params._id;
   const editado = req.body;
-  const curso = editado.curso
-  const anioCurso = editado.anioCurso
   
   console.log("EDITADO --->", editado)
   await Personaje.findByIdAndUpdate(personajeId, {
@@ -164,7 +162,9 @@ exports.postPersonaje = async (req, res) => {
     },
     legajo: {
       numeroLegajo: editado.numeroLegajo,
-      anioLegajo: editado.anioLegajo
+      anioLegajo: editado.anioLegajo,
+      curso: editado.curso,
+      division: editado.division
     },
     historial: {
       colegioOrigen: editado.colegioOrigen,
@@ -174,14 +174,16 @@ exports.postPersonaje = async (req, res) => {
       situacion: editado.situacion,
       observaciones: editado.observaciones,
       fechaEgreso: editado.fechaEgreso
-    },
-    /* INSERTAR EL OBJETO AL FINAL DEL ARREGLO TRAYECTORIA */
+    }
+
   });
+  
   req.flash("info", "Edición exitosa!");
   return res.redirect("/list"); 
   
 };
 
+/* PARA VER LOS DATOS DEL REGISTRO */
 exports.verPersonaje = async (req, res) => {
   const idVista = req.params._id;
   const vista = await Personaje.findById(idVista);
@@ -190,7 +192,7 @@ exports.verPersonaje = async (req, res) => {
   const fechaSalida = helpers.fechaNacimiento(vista.historial.fechaSalida);
   const fechaEgreso = helpers.fechaNacimiento(vista.historial.fechaEgreso);
   const historial = vista.historial;  
-  const trayectoria = vista.trayectoria;
+  const legajo = vista.legajo;
 
   console.log("idvista ->", fechaNac);
   console.log("idvista2 ->", fechaIngreso);
@@ -202,7 +204,7 @@ exports.verPersonaje = async (req, res) => {
     fechaEgreso,
     fechaSalida,
     historial,
-    trayectoria,
+    legajo,
     nombrePagina: "Vista",
   });
 };

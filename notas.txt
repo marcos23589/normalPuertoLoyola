@@ -1,1 +1,23 @@
+- legajo debe ser único: 
+    - en la base de datos legajo deber estar aparte de curso/division
+    - crear una variable de legajo xxxx/xx que tome legajo/anioLegajo
+- cambiar en la vista la toma de datos para legajo
+    - mantener las 2 variables de datos en la vista, pero asignarlas a una sola
+    - crear una sola variable a guardar en la base de Datos
+    - crear una validacion 
 
+
+legajo: {
+    numeroLegajo: {
+      type: Number,
+      min: [1, "Dato no válido"],
+    },
+    anioLegajo: {
+      type: Number,
+      min: [00, "Año no válido"],
+    },    
+
+
+
+
+- libro y folio tambien debe ser único

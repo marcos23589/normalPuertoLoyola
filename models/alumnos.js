@@ -11,33 +11,17 @@ const personajeSchema = mongoose.Schema({
   },
   nacimiento: Date,
   lugarNacimiento: String,
+  
   libroMatriz: {
-    numeroLibro: {
-      type: Number,
-      min: [1, "Dato no válido"],
-    },
-    folioLibro: {
-      type: Number,
-      min: [1, "Dato no válido"],
-    },
+    type: String,
+    unique: true,
   },
   legajo: {
-    numeroLegajo: {
-      type: Number,
-      min: [1, "Dato no válido"],
-    },
-    anioLegajo: {
-      type: Number,
-      min: [00, "Año no válido"],
-    },
-  },
-  trayectoria: new Array({
-    curso: String,
-    anioCurso: {
-      type: Number,
-      min: [1900, "Año no válido"],
-    },
-  }),
+    type: String,
+    unique: true,
+  },  
+  curso: Number,
+  division: String,  
   historial: {
     colegioOrigen: String,
     ingreso: Date,

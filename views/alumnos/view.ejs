@@ -9,6 +9,28 @@
       </h5>
       <br />
       <hr />
+      <h3 class="text-center fw-bold">Libro Matriz y Legajo</h3>
+      <table class="table table-sm caption-top align-middle text-center">
+        <thead>
+          <tr>
+            <th scope="col">Libro</th>
+            <th scope="col">Folio</th>
+            <th scope="col">Legajo</th>
+            <th scope="col">Año</th>
+            <th scope="col">Curso actual</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><%- vista.libroMatriz.numeroLibro %></td>
+            <td><%- vista.libroMatriz.folioLibro %></td>
+            <td><%- vista.legajo.numeroLegajo %></td>
+            <td><%- vista.legajo.anioLegajo %></td>
+            <td><%- legajo.curso + legajo.division %></td>
+          </tr>
+        </tbody>
+      </table>
+      <hr />
       <h3 class="text-center fw-bold">Historial</h3>
       <table class="table table-sm caption-top align-middle text-center">
         <thead>
@@ -18,7 +40,6 @@
             <th scope="col">Colegio de destino</th>
             <th scope="col">Fecha de salida</th>
             <th scope="col">Situación</th>
-            <th scope="col">Observaciones</th>
             <th scope="col">Fecha de egreso</th>
           </tr>
         </thead>
@@ -28,52 +49,25 @@
             <td><%- fechaIngreso %></td>
             <td><%- historial.colegioDestino %></td>
             <td><%- fechaSalida %></td>
-            <td><%- historial.situacion %></td>
-            <td><%- historial.observaciones %></td>
+            <td><%- historial.situacion %></td>            
             <td><%- fechaEgreso %></td>
           </tr>
         </tbody>
       </table>
-      <br />
-      <hr />
-      <h3 class="text-center fw-bold">Libro Matriz y Legajo</h3>
-      <table class="table table-sm caption-top align-middle text-center">
+      <table class="table table-sm caption-top align-left text-left">
         <thead>
-          <tr>
-            <th scope="col">Libro</th>
-            <th scope="col">Folio</th>
-            <th scope="col">Legajo</th>
-            <th scope="col">Año</th>
+          <tr>            
+            <th scope="col">Observaciones</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><%- vista.libroMatriz.numeroLibro %></td>
-            <td><%- vista.libroMatriz.folioLibro %></td>
-            <td><%- vista.legajo.numeroLegajo %></td>
-            <td><%- vista.legajo.anioLegajo %></td>
+            <td><%- historial.observaciones %></td>
           </tr>
         </tbody>
       </table>
-      <br />
       <hr />
-      <h3 class="text-center fw-bold">
-        Trayectoria dentro del establecimiento
-      </h3>
       <br />
-      <table class="table table-sm caption-top align-middle text-center">
-        <thead>
-          <% trayectoria.forEach(function(trayectoria){ %>
-          <th scope="row">Rac <%- trayectoria.anioCurso %></th>
-          <% }) %>
-        </thead>
-        <tbody>
-          <% trayectoria.forEach(function(trayectoria){ %>
-          <td><%- trayectoria.curso %></td>
-          <% }) %>
-        </tbody>
-      </table>
-
       <div
         class="btn-group justify-content-end"
         role="group"
