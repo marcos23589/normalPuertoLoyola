@@ -34,8 +34,10 @@ exports.crearPersonaje = async (req, res) => {
     nacimiento,
     curso,
     division,
-    libroMatriz,
-    legajo,
+    numeroLibro,
+    folioLibro,
+    numeroLegajo,
+    anioLegajo,
     colegioOrigen,
     ingreso,
     colegioDestino,
@@ -44,6 +46,9 @@ exports.crearPersonaje = async (req, res) => {
     fechaEgreso,
     observaciones,
   } = req.body;
+
+  const libroMatriz = numeroLibro+folioLibro
+  const legajo = numeroLegajo+anioLegajo.slice(-2)
   
   const historial = {
     colegioOrigen,
@@ -69,16 +74,27 @@ exports.crearPersonaje = async (req, res) => {
   };
 
   console.log("crear ->", persona);
-  
+
+  /* SE REVISA QUE LEGAJO, FOLIO EN LIBRO MATRIZ 
+  Y DNI NO SEAN DUPLICADOS */
   try {
     await Personaje(persona).save();
     req.flash("info", "Ingreso exitoso!");
   } catch (error) {
-    console.log("ERROR! ->", error);
+    //console.log("ERROR! ->", error);
+    //console.log("ERROR 2! ->", error.keyPattern);
     if (error.code == 11000) {
-      req.flash("alerta", "Documento ya registrado!");
+      if (error.keyPattern.documento == 1){
+        req.flash("alerta", "Documento ya registrado!");
+      }
+      else if (error.keyPattern.legajo == 1) {
+        req.flash("alerta", "Legajo ya registrado!");
+      } 
+      else if (error.keyPattern.libroMatriz == 1) {
+        req.flash("alerta", "Folio ya utlizado en Lobr Matriz!");
+      }       
     } else {
-      req.flash("alerta", "datos ingresados no válidos");
+      req.flash("alerta", "Datos ingresados no son válidos");
     }
   }
   return res.redirect("list");
