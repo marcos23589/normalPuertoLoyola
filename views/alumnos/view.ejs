@@ -13,20 +13,16 @@
       <table class="table table-sm caption-top align-middle text-center">
         <thead>
           <tr>
-            <th scope="col">Libro</th>
-            <th scope="col">Folio</th>
+            <th scope="col">Libro y folio</th>
             <th scope="col">Legajo</th>
-            <th scope="col">Año</th>
             <th scope="col">Curso actual</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><%- vista.libroMatriz.numeroLibro %></td>
-            <td><%- vista.libroMatriz.folioLibro %></td>
-            <td><%- vista.legajo.numeroLegajo %></td>
-            <td><%- vista.legajo.anioLegajo %></td>
-            <td><%- legajo.curso + legajo.division %></td>
+            <td><%- libroMatriz %></td>
+            <td><%- legajo %></td>
+            <td><%- curso %></td>
           </tr>
         </tbody>
       </table>

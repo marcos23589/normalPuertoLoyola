@@ -26,7 +26,7 @@ exports.crearPersonajeGet = (req, res) => {
 
 /* SE ENVIAN DATOS A LA BASE PARA AGREGAR */
 exports.crearPersonaje = async (req, res) => {
-  const {
+  let {
     nombre,
     apellido,
     lugarNacimiento,
@@ -47,7 +47,26 @@ exports.crearPersonaje = async (req, res) => {
     observaciones,
   } = req.body;
 
+
+  if (numeroLibro < 10){
+      numeroLibro = "00" + numeroLibro
+    }else if (numeroLibro < 99){
+      numeroLibro = "0" + numeroLibro
+    }
+
+  if (folioLibro < 10){
+      folioLibro = "00" + folioLibro
+    }else if (folioLibro < 99){
+      folioLibro = "0" + folioLibro
+    }
   const libroMatriz = numeroLibro+folioLibro
+
+  if (numeroLegajo < 10){
+    numeroLegajo = "00" + numeroLegajo
+  }else if (numeroLegajo < 100){
+    numeroLegajo = "0" + numeroLegajo
+  }
+
   const legajo = numeroLegajo+anioLegajo.slice(-2)
   
   const historial = {
@@ -73,7 +92,7 @@ exports.crearPersonaje = async (req, res) => {
     historial,
   };
 
-  console.log("crear ->", persona);
+  console.log("crear Persona ->", persona);
 
   /* SE REVISA QUE LEGAJO, FOLIO EN LIBRO MATRIZ 
   Y DNI NO SEAN DUPLICADOS */
@@ -103,12 +122,15 @@ exports.crearPersonaje = async (req, res) => {
 /* LISTAR REGISTROS */
 exports.listarPersonajes = async (req, res) => {
   const resultado = await Personaje.find();
+
+  console.log("Listar personajes", resultado)
+
   for (const element of resultado) {
     let fecha = helpers.fechaNacimiento(element.nacimiento);
     //se crea otra variable dentro del objeto para mostrarla
     element.fecha = fecha;
   }
-
+/* ACA VAN LAS VARIABLES QUE SE PINTAN EN LA VISTA */
   return res.render("alumnos/list", {
     resultado,
     nombrePagina: "Lista de alumnos",
@@ -134,9 +156,12 @@ exports.editarPersonaje = async (req, res) => {
   }
   
   const libroMatriz = edicion.libroMatriz
-
+  const numeroLibro = libroMatriz.substr(0,3)
+  const folioLibro = libroMatriz.substr(3,6)
     
   const legajo = edicion.legajo
+  const numeroLegajo = legajo.substr(0,3)
+  const anioLegajo = legajo.substr(3,5)
 
   const historial = {
     colegioOrigen: edicion.historial.colegioOrigen,
@@ -148,13 +173,15 @@ exports.editarPersonaje = async (req, res) => {
     observaciones: edicion.historial.observaciones
   }
 
-
+/* ACA VAN LAS VARIABLES QUE SE PINTAN EN LA VISTA */
   console.log("EDICION --->", edicion)
   return res.render("alumnos/edit", {
     edicion,
     datos,
-    libroMatriz,
-    legajo,
+    numeroLibro,
+    folioLibro,
+    numeroLegajo,
+    anioLegajo,
     historial,
     nombrePagina: "Home",
   });
@@ -172,16 +199,12 @@ exports.postPersonaje = async (req, res) => {
     apellido: editado.apellido,
     documento: editado.documento,
     nacimiento: editado.nacimiento,
-    libroMatriz: {
-      numeroLibro: editado.numeroLibro,
-      folioLibro: editado.folioLibro
-    },
-    legajo: {
-      numeroLegajo: editado.numeroLegajo,
-      anioLegajo: editado.anioLegajo,
-      curso: editado.curso,
-      division: editado.division
-    },
+    libroMatriz: editado.numeroLibro + editado.folioLibro,
+
+    legajo: editado.numeroLegajo+editado.anioLegajo.slice(-2),
+    curso: editado.curso,
+    division: editado.division,
+    
     historial: {
       colegioOrigen: editado.colegioOrigen,
       ingreso: editado.ingreso,
@@ -199,7 +222,7 @@ exports.postPersonaje = async (req, res) => {
   
 };
 
-/* PARA VER LOS DATOS DEL REGISTRO */
+/* PARA PINTAR EN LA PANTALLA DE VER ALUMNO */
 exports.verPersonaje = async (req, res) => {
   const idVista = req.params._id;
   const vista = await Personaje.findById(idVista);
@@ -207,20 +230,30 @@ exports.verPersonaje = async (req, res) => {
   const fechaIngreso = helpers.fechaNacimiento(vista.historial.ingreso);
   const fechaSalida = helpers.fechaNacimiento(vista.historial.fechaSalida);
   const fechaEgreso = helpers.fechaNacimiento(vista.historial.fechaEgreso);
-  const historial = vista.historial;  
-  const legajo = vista.legajo;
+  const historial = vista.historial
 
-  console.log("idvista ->", fechaNac);
-  console.log("idvista2 ->", fechaIngreso);
-  console.log("cuerpo -->", vista);
+  console.log("VISTA -->", vista);
+
+  const numeroLibro = vista.libroMatriz.substr(0,3)
+  const folioLibro = vista.libroMatriz.substr(3,6)  
+  const libroMatriz = `${numeroLibro}/${folioLibro}`
+
+  const numeroLegajo = vista.legajo.substr(0,3)
+  const anioLegajo = vista.legajo.substr(3,5)
+  const legajo = `${numeroLegajo}/${anioLegajo}`
+  const curso = `${vista.curso + vista.division}`
+  
+  /* ACA VAN LAS VARIABLES QUE SE PINTAN EN LA VISTA */
   return res.render("alumnos/view", {
     vista,
     fechaNac,
     fechaIngreso,
     fechaEgreso,
     fechaSalida,
+    libroMatriz,
     historial,
     legajo,
+    curso,
     nombrePagina: "Vista",
   });
 };
